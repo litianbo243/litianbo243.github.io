@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="vim使用指南"><meta name="keywords" content="linux,vim"><meta name="author" content="pangzibo243"><meta name="copyright" content="pangzibo243"><title>vim使用指南 | pangzibo243's blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vim使用指南"><span class="toc-text">vim使用指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#移动光标"><span class="toc-text">移动光标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模式"><span class="toc-text">模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#退出vim"><span class="toc-text">退出vim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除命令"><span class="toc-text">删除命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销和恢复命令"><span class="toc-text">撤销和恢复命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#剪切命令"><span class="toc-text">剪切命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拷贝命令"><span class="toc-text">拷贝命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换命令"><span class="toc-text">替换命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件信息"><span class="toc-text">文件信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跳转"><span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位括号"><span class="toc-text">定位括号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缩进"><span class="toc-text">缩进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换"><span class="toc-text">替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行shell命令"><span class="toc-text">执行shell命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件另存为"><span class="toc-text">文件另存为</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_faceQ.png"></div><div class="author-info__name text-center">pangzibo243</div><div class="author-info__description text-center">pangzibo243's blog</div><div class="follow-button"><a href="https://github.com/litianbo243">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">22</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">31</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">7</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">pangzibo243's blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">vim使用指南</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-30</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/linux/">linux</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="vim使用指南"><a href="#vim使用指南" class="headerlink" title="vim使用指南"></a>vim使用指南</h1><h2 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h2><p>可以使用方向键,也可以使用hjkl四个按键</p>
+<p>h← j↓ k↑ l→</p>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p><img src="https://images2015.cnblogs.com/blog/559218/201706/559218-20170609180545559-1881273510.png" alt="img"></p>
+<h2 id="退出vim"><a href="#退出vim" class="headerlink" title="退出vim"></a>退出vim</h2><ol>
+<li><p>保存修改并退出</p>
+<p>:wq</p>
+</li>
+<li><p>直接退出</p>
+<p>:q!</p>
+<p>:q</p>
+</li>
+</ol>
+<h2 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h2><p>在插入模式使用退格进行删除</p>
+<p>在普通模式下输入x进行删除</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d0</td>
+<td>删除光标从当前位置（不包含）到该行行首的所有字符</td>
+</tr>
+<tr>
+<td>d$</td>
+<td>删除从光标当前位置（包含）到该行行尾的所有字符</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除光标所在行的所有字符</td>
+</tr>
+<tr>
+<td>dgg</td>
+<td>删除光标所在行（包含）到文件开头的所有字符</td>
+</tr>
+<tr>
+<td>dG</td>
+<td>删除光标所在行（包含）到文件末尾的所有字符</td>
+</tr>
+</tbody></table>
+<h2 id="撤销和恢复命令"><a href="#撤销和恢复命令" class="headerlink" title="撤销和恢复命令"></a>撤销和恢复命令</h2><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>撤销最后一次修改</td>
+</tr>
+<tr>
+<td>U</td>
+<td>撤销对整行的修改</td>
+</tr>
+<tr>
+<td>Ctrl + r</td>
+<td>恢复撤销的内容</td>
+</tr>
+</tbody></table>
+<h2 id="剪切命令"><a href="#剪切命令" class="headerlink" title="剪切命令"></a>剪切命令</h2><p>使用 p 命令可以将最后一次删除的内容粘贴到光标之后。（大写的 P 则是粘贴到光标之前）</p>
+<h2 id="拷贝命令"><a href="#拷贝命令" class="headerlink" title="拷贝命令"></a>拷贝命令</h2><p>语法跟删除的 d 命令一样：y motion</p>
+<p>拷贝完成之后同样使用 p 命令进行粘贴</p>
+<h2 id="替换命令"><a href="#替换命令" class="headerlink" title="替换命令"></a>替换命令</h2><p>VIM 还提供了一个简单的替换命令：r 命令。r 用于替换光标所在的字符，做法是先将光标移动到需要替换的字符处，按一下 r 键，然后输入新的字符。注意，全程无需进入插入模式，也不会进入插入模式。</p>
+<p>替换模式:</p>
+<p>​        对于需要替换多个字符，更好的方案是直接进入替换模式。按下大写的 R 键，屏幕左下角出现 – REPLACE – 字样，说明你已经处于替换模式。此时输入字符可以连续替换光标及其后边的内容。注意：退格键（Backspace）在替换模式中被解释为<strong>如果左边内容被替换过，则恢复到原来的样子；如果没有被替换过，则简单的向左移动。</strong>修改完毕后，按下 Esc 回到普通模式。</p>
+<h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><p>快捷键 ctrl + g 可以解决你的需求</p>
+<h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><p>当你的光标在文件中随意徘徊时，突然想到目标就在第 333 行的位置，你应该怎么做？假设你当前光标位于文件第 1333 行，你的做法是在普通模式下按 1000 次 k 键？</p>
+<p>在 VIM 有两种方式可以将光标跳转到指定的位置：</p>
+<ul>
+<li>行号 + G</li>
+<li>:行号</li>
+</ul>
+<p>比如将光标跳转到第 333 行的位置，你就输入数字 333，再输入大写字母 G 即可见证奇迹；或者输入冒号（:）进入命令行模式，再输入数字 333，最后回车，也可以跳转到目的地。</p>
+<h2 id="定位括号"><a href="#定位括号" class="headerlink" title="定位括号"></a>定位括号</h2><p>VIM 有个按键可以帮你快速定位到另一半括号，别说我没告诉你，就是 % 键。将光标移动到 ()，[]，{}，中的任何一半括号上，按下 % 键，便可看到此时光标已经跳转到另外一半的括号上了。</p>
+<h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><p>你可以按一下 v 进入可视模式（左下角出现 – VISUAL – 字样），然后通过 h、j、k、l 或 其他 motion 来移动你的光标，此时光标所到之处必被一道亮光所包围（表示被选中），选择好需要缩进的目标后，只需按一下 &gt; 即可完成任务。</p>
+<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>在普通模式下按下斜杠（/）也是进入命令行模式，此时该字符和光标均出现在屏幕的底部，这跟冒号（:）一样。</p>
+<p>紧挨着斜杠（/）的是搜索目标，比如 /love，说明你找的是 love 这个字符串在光标后边第一次出现的位置，当然你也可以输入中文，比如 /你瞅啥</p>
+<p>那如果要找下一个目标怎么办？这时你只需按 n 键即可定位到下一个符合的目标（向下查找），而按 N 键则返回上一个（向上查找）。</p>
+<p>注意：第一个搜索到的目标不是文件中的第一个目标，而是从你的光标所在处开始找到的那个目标。所以你如果想要搜索文件中第一个匹配的目标，你应该先 gg 将光标移动到文件头，然后再使用搜索命令。</p>
+<h2 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h2><p>通过搜索功能，我们将光标定位到目标位置，如果你确定这个目标是可恶的，需要被替换的，你可以输入 :s/old/new，这样即可将光标所在行的第一个 old 替换为 new；你如果输入的是 :s/old/new/g，则表示将光标所在行的所有 old 替换为 new。</p>
+<p>但如果要替换整个文件的所有匹配字符串怎么办？总不能每一行来一下吧？<br>只要你能想到的，VIM 就有办法！输入 :%s/old/new/g表示替换整个文件中每个匹配的字符串。</p>
+<h2 id="执行shell命令"><a href="#执行shell命令" class="headerlink" title="执行shell命令"></a>执行shell命令</h2><p>在输入冒号（:）进入命令行模式，输入感叹号（!），在其后便可以加上 shell 命令。此后 VIM 将临时跳转回 shell，并执行命令。再次按下 Enter 键回到 VIM。</p>
+<h2 id="文件另存为"><a href="#文件另存为" class="headerlink" title="文件另存为"></a>文件另存为</h2><p>一般的文本编辑工具都会有“另存为”的功能，用于将文件重新存放到一个新的文件中（旧文件保留不变）。VIM 也可以这么干，做法是输入 :w 新文件名</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">pangzibo243</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://litianbo243.github.io/2019/08/30/vim使用指南/">https://litianbo243.github.io/2019/08/30/vim使用指南/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/vim/">vim</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_zhifubao_code.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_weixin_code.png"><div class="post-qr-code__desc">微信打赏</div></div></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/08/29/python基础/"><span>python基础</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By pangzibo243</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
