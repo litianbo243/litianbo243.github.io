@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="如何划分训练集,验证集,测试集"><meta name="keywords" content="deeplearning"><meta name="author" content="pangzibo243"><meta name="copyright" content="pangzibo243"><title>如何划分训练集,验证集,测试集 | pangzibo243's blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何划分训练集-验证集-测试集"><span class="toc-text">如何划分训练集,验证集,测试集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#训练集-验证集-测试集之间的区别"><span class="toc-text">训练集,验证集,测试集之间的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要测试集"><span class="toc-text">为什么要测试集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交叉验证法"><span class="toc-text">交叉验证法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合理划分比例"><span class="toc-text">合理划分比例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_faceQ.png"></div><div class="author-info__name text-center">pangzibo243</div><div class="author-info__description text-center">pangzibo243's blog</div><div class="follow-button"><a href="https://github.com/litianbo243">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">26</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">33</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">pangzibo243's blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">如何划分训练集,验证集,测试集</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-04</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/deeplearning/">deeplearning</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="如何划分训练集-验证集-测试集"><a href="#如何划分训练集-验证集-测试集" class="headerlink" title="如何划分训练集,验证集,测试集"></a>如何划分训练集,验证集,测试集</h1><h2 id="训练集-验证集-测试集之间的区别"><a href="#训练集-验证集-测试集之间的区别" class="headerlink" title="训练集,验证集,测试集之间的区别"></a>训练集,验证集,测试集之间的区别</h2><ul>
+<li>训练集（train set） —— 用于模型拟合的数据样本。</li>
+<li>验证集（development set）—— 是模型训练过程中单独留出的样本集，它可以用于调整模型的超参数和用于对模型的能力进行初步评估。</li>
+</ul>
+<p>在神经网络中， 我们用验证数据集去寻找最优的网络深度（number of hidden layers)，或者决定反向传播算法的停止点或者在神经网络中选择隐藏层神经元的数量</p>
+<p>在普通的机器学习中常用的交叉验证（Cross Validation) 就是把训练数据集本身再细分成不同的验证数据集去训练模型</p>
+<ul>
+<li>测试集 —— 用来评估模最终模型的泛化能力。但不能作为调参、选择特征等算法相关的选择的依据。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>验证集</th>
+<th>测试集</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是否用来训练</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>用于调超参数，监控模型是否发生过拟合（以决定是否停止训练）</td>
+<td>为了评估最终模型泛化能力</td>
+</tr>
+<tr>
+<td>使用次数</td>
+<td>多次使用，以不断调参</td>
+<td>仅仅一次使用</td>
+</tr>
+<tr>
+<td>缺陷</td>
+<td>模型在一次次重新手动调参并继续训练后所逼近的验证集，可能只代表一部分非训练集，导致最终训练好的模型泛化性能不够</td>
+<td>测试集为了具有泛化代表性，往往数据量比较大，测试一轮要很久，所以往往只取测试集的其中一小部分作为训练过程中的验证集</td>
+</tr>
+</tbody></table>
+<h2 id="为什么要测试集"><a href="#为什么要测试集" class="headerlink" title="为什么要测试集"></a>为什么要测试集</h2><ul>
+<li><p>训练集直接参与了模型调参的过程，显然不能用来反映模型真实的能力（防止课本死记硬背的学生拥有最好的成绩，即防止过拟合)。</p>
+</li>
+<li><p>验证集参与了人工调参(超参数)的过程，也不能用来最终评判一个模型（刷题库的学生不能算是学习好的学生）。</p>
+</li>
+<li><p>所以要通过最终的考试(测试集)来考察一个学(模)生(型)真正的能力（期末考试）。</p>
+</li>
+</ul>
+<p>但是仅凭一次考试就对模型的好坏进行评判显然是不合理的，所以接下来就要介绍<strong>交叉验证法</strong></p>
+<h2 id="交叉验证法"><a href="#交叉验证法" class="headerlink" title="交叉验证法"></a>交叉验证法</h2><p>交叉验证法的作用就是尝试利用不同的训练集/验证集划分来对模型做多组不同的训练/验证，来应对单独测试结果过于片面以及训练数据不足的问题。（就像通过多次考试，才通知哪些学生是比较比较牛B的）</p>
+<p>交叉验证的做法就是将数据集粗略地分为比较均等不相交的k份<br>$$<br>D = D_1 \cup D_2 \cup \cdots \cup D_k<br>$$</p>
+<p>$$<br>D_i \neq D_j (i \neq j)<br>$$</p>
+<p>然后取其中的一份进行测试，另外的k-1份进行训练，然后求得error的平均值作为最终的评价</p>
+<p><img src="https://raw.githubusercontent.com/Ph0en1xGSeek/githubpage_img/master/machine_learning/cross_validation.png" alt="cross_validation"></p>
+<p>举个例子：假设建立一个BP神经网络，对于隐含层的节点数目，我们并没有很好的方法去确定。此时，一般将节点数设定为某一具体的值，通过训练集训练出相应的参数后，再由交叉验证集去检测该模型的误差；</p>
+<p>然后再改变节点数，重复上述过程，直到交叉验证误差最小。</p>
+<p>交叉验证算法的具体步骤如下：</p>
+<ol>
+<li><p>随机将训练数据等分成k份，S1, S2, …, Sk。</p>
+</li>
+<li><p>对于每一个模型Mi，算法执行k次，每次选择一个Sj作为验证集，而其它作为训练集来训练模型Mi，把训练得到的模型在Sj上进行测试，这样一来，每次都会得到一个误差E，最后对k次得到的误差求平均，就可以得到模型Mi的泛化误差。</p>
+</li>
+<li><p>算法选择具有最小泛化误差的模型作为最终模型，并且在整个训练集上再次训练该模型，从而得到最终的模型。</p>
+</li>
+</ol>
+<p>K值的选择:</p>
+<p>K值的选取是一个偏差与方差的权衡：</p>
+<p>K=1时，所有数据用于训练，容易过拟合；</p>
+<p>K=N时，相当于留一法LOOCV  (Leave-one-out cross-validation ). </p>
+<p>通常建议K=10</p>
+<p>2017年的一项研究给出了另一种经验式的选择方法，作者建议<br>$$<br>K \approx log(n)<br>$$<br>且保证<br>$$<br>n / K &gt; 3d<br>$$</p>
+<h2 id="合理划分比例"><a href="#合理划分比例" class="headerlink" title="合理划分比例"></a>合理划分比例</h2><p>过去，人们运用机器学习传统方法的时候，一般将训练集和测试集划为<strong>7：3</strong></p>
+<p>若有验证集，则划为<strong>6:2:2</strong>. 这样划分确实很科学，当数据量不大的时候（万级别及以下）</p>
+<p>但到了大数据时代，数据量陡增为百万级别，此时我们不需要那么多的验证集和训练集</p>
+<p>假设有100W条数据，只需要拿出1W条来当验证集，1W条来当测试集，就能很好地work了</p>
+<p>因此，在深度学习中若是数据很大，我们可以将训练集、验证集、测试集比例调整为<strong>98：1：1</strong></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/kieven2008/article/details/81582591" target="_blank" rel="noopener">https://blog.csdn.net/kieven2008/article/details/81582591</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">pangzibo243</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://litianbo243.github.io/2019/09/04/如何划分训练集,验证集,测试集/">https://litianbo243.github.io/2019/09/04/如何划分训练集,验证集,测试集/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/deeplearning/">deeplearning</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_zhifubao_code.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_weixin_code.png"><div class="post-qr-code__desc">微信打赏</div></div></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/09/01/braTS2019-数据集简介/"><span>braTS2019 数据集介绍</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By pangzibo243</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
