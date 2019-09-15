@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="数据预处理"><meta name="keywords" content="deeplearning,学习深度学习"><meta name="author" content="pangzibo243"><meta name="copyright" content="pangzibo243"><title>数据预处理 | pangzibo243's blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据预处理"><span class="toc-text">数据预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#中心化-零均值"><span class="toc-text">中心化(零均值)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归一化"><span class="toc-text">归一化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准化"><span class="toc-text">标准化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准化和归一化的目的"><span class="toc-text">标准化和归一化的目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像数据扩增"><span class="toc-text">图像数据扩增</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#torchvision-中的数据扩增方法"><span class="toc-text">torchvision 中的数据扩增方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CenterCrop-size"><span class="toc-text">CenterCrop(size)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ColorJitter-brightness-0-contrast-0-saturation-0-hue-0"><span class="toc-text">ColorJitter(brightness=0, contrast=0, saturation=0, hue=0)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FiveCrop-size"><span class="toc-text">FiveCrop(size)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Grayscale-num-output-channels-1"><span class="toc-text">Grayscale(num_output_channels=1)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pad-padding-fill-0-padding-mode-’constant’"><span class="toc-text">Pad(padding, fill=0, padding_mode=’constant’)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomAffine-egrees-translate-None-scale-None-shear-None-resample-False-fillcolor-0"><span class="toc-text">RandomAffine(egrees, translate=None, scale=None, shear=None, resample=False, fillcolor=0)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomApply-transforms-p-0-5"><span class="toc-text">RandomApply(transforms,p=0.5)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomChoise-transforms"><span class="toc-text">RandomChoise(transforms)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomCrop-size-padding-None-pad-if-needed-False-fill-0-padding-mode-’constant’"><span class="toc-text">RandomCrop(size, padding=None, pad_if_needed=False, fill=0, padding_mode=’constant’)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomGrayscale-p-0-1"><span class="toc-text">RandomGrayscale(p=0.1)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomHorizontalFlip-p-0-5"><span class="toc-text">RandomHorizontalFlip(p=0.5)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomOrder-transforms"><span class="toc-text">RandomOrder(transforms)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RamdomPerspective-distortion-scale-0-5-p-0-5-interpolation-3"><span class="toc-text">RamdomPerspective(distortion_scale=0.5, p=0.5, interpolation=3)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomSizeCrop-size-scale-0-08-1-0-ratio-0-75-1-3333333333333333-interpolation-2"><span class="toc-text">RandomSizeCrop(size, scale=(0.08, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomRotation-degrees-resample-False-expand-False-center-None"><span class="toc-text">RandomRotation(degrees, resample=False, expand=False, center=None)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomVerticalFilp-p-0-5"><span class="toc-text">RandomVerticalFilp(p=0.5)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resize-size-interpolation-2"><span class="toc-text">Resize(size, interpolation=2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TenCrop-size-vertical-flip-False"><span class="toc-text">TenCrop(size, vertical_flip=False)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Normalize-mean-std-inplace-False"><span class="toc-text">Normalize(mean, std, inplace=False)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ToPILImage-mode-None"><span class="toc-text">ToPILImage(mode=None)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Totensor"><span class="toc-text">Totensor()</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_faceQ.png"></div><div class="author-info__name text-center">pangzibo243</div><div class="author-info__description text-center">pangzibo243's blog</div><div class="follow-button"><a href="https://github.com/litianbo243">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">34</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">34</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">pangzibo243's blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">数据预处理</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-06</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/deeplearning/">deeplearning</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="中心化-零均值"><a href="#中心化-零均值" class="headerlink" title="中心化(零均值)"></a>中心化(零均值)</h2><p>中心化就是零均值化，对于每一个元素减去<strong>本图像</strong>的平均值即可。<br>$$<br>E（X-E（X））=0<br>$$<br>这样做的意义在于，对于某些激活函数，比如sigmoid，relu，tanh而言，激活函数单调递增，其任意一点导数均大于零。<br>$$<br>f(\sum_{i} w_i x_i + b)<br>$$<br>而f关于wi的偏导数为xi，如果xi均为正数（或者负数），那么<br>$$<br>\frac {\partial L_i} {\partial w_i} = \frac {\partial L_i} {\partial f} \frac {\partial f} {\partial w_i} = \frac {\partial L_i} {\partial f} x_i<br>$$<br>其正负等同于xi的正负，也就是必然是正数（或者零）。</p>
+<p>那么如果想要使得loss函数减小，朝着<br>$$<br>\frac {\partial L_i} {\partial w_i}<br>$$<br>的方向运动的话，就会出现只能朝着每一个wi的正方向或者负方向运动的情况。如果有n个wi的向量，则有2^n个象限，除非最优化wi就在全为正的第一象限，否则优化本身必然比较曲折。</p>
+<p><img src="https://img-blog.csdnimg.cn/20181119003851150.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTczMzI2Mg==,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>会反复向正方向运行收敛。如果此时纵坐标可以向负方向运动，则可以直接到达最优化点。</p>
+<p>所以我们进行零均值化，当x正负数量“差不多”时，那么梯度的变化方向就会不确定，这样就能达到上图中的变化效果，加速了权重的收敛。</p>
+<h2 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a>归一化</h2><p>归一化是指将原始数据通过线性变化转换为范围在[0, 1]或[-1, 1]之间的数。</p>
+<p>  范围在[0,1 ]变换公式如下：<br>$$<br>x = \frac {x−min} {max−min}<br>$$<br>其中，min为最小值，max为最大值。</p>
+<p>范围在[-1, 1]之间的变换公式如下：<br>$$<br>x = \frac {x-\mu} {max-min}<br>$$</p>
+<p>其中，μ为最均值，max为最大值。</p>
+<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><p>标准化也叫Z-Score标准化，是指将原始数据转化为均值为0，标准差为1的数据集，经过标准化处理的数据符合标准的正态分布，变换公式如下：<br>$$<br>x = \frac {x-\mu} {\sigma}<br>$$<br>其中μ为数据集的平均值，δ为数据集的标准差。</p>
+<h2 id="标准化和归一化的目的"><a href="#标准化和归一化的目的" class="headerlink" title="标准化和归一化的目的"></a>标准化和归一化的目的</h2><p>归一化/标准化可以去除数据单位对计算带来的影响，也就是所谓的去量纲行为，归一化/标准化实质是一种线性变换，线性变换有很多良好的性质，这些性质决定了对数据改变后不会造成“失效”，反而能提高数据的表现，这些性质是归一化/标准化的前提。</p>
+<p>归一化/标准化的去量纲作用能够带来以下两个好处：</p>
+<ul>
+<li>提升模型的精度。一些分类器需要计算样本之间的距离（如欧氏距离），例如KNN。如果一个特征值域范围非常大，那么距离计算就主要取决于这个特征，从而与实际情况相悖（比如这时实际情况是值域范围小的特征更重要）。</li>
+<li>提高收敛速度。对于线性模型来说，数据归一化/标准化后，最优解的寻优过程明显会变得平缓，更容易正确的收敛到最优解。如下图所示：</li>
+</ul>
+<h2 id="图像数据扩增"><a href="#图像数据扩增" class="headerlink" title="图像数据扩增"></a>图像数据扩增</h2><p>若增加训练数据，则能够提升算法的准确率，因为这样可以避免过拟合，更好地泛化；而避免了过拟合你就可以增大你的网络结构了。<br>可以大量使用数据增广。</p>
+<ol>
+<li>几何变换</li>
+</ol>
+<p>包括：弹性变换（Elastic Transform）、透视变换（Perspective Transform）、分段仿射变换（Piecewise Affine transforms）、枕形畸变（Pincushion Distortion）。</p>
+<ul>
+<li>随机改变大小（resize）,随机缩放、旋转、翻转</li>
+<li>从原始图像（256,256）中，随机的crop出一些图像（224,224）</li>
+</ul>
+<p>不做随机crop，大型网络基本都过拟合(under substantial overfitting)。</p>
+<ul>
+<li>水平/竖直翻转，flip。mirror，即水平翻转图像</li>
+<li>Rotation变换/旋转变换</li>
+</ul>
+<ol start="2">
+<li>加噪声</li>
+</ol>
+<p>对主成分做一个(0, 0.1)的高斯扰动。</p>
+<h2 id="torchvision-中的数据扩增方法"><a href="#torchvision-中的数据扩增方法" class="headerlink" title="torchvision 中的数据扩增方法"></a>torchvision 中的数据扩增方法</h2><p>torchvision.transforms中的数据扩增方法是针对于PIL图片</p>
+<h3 id="CenterCrop-size"><a href="#CenterCrop-size" class="headerlink" title="CenterCrop(size)"></a>CenterCrop(size)</h3><p>Crops the given PIL Image at the center.</p>
+<p><strong>size</strong> (<em>sequence</em> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Desired output size of the crop. If size is an int instead of sequence like (h, w), a square crop (size, size) is made.</p>
+<h3 id="ColorJitter-brightness-0-contrast-0-saturation-0-hue-0"><a href="#ColorJitter-brightness-0-contrast-0-saturation-0-hue-0" class="headerlink" title="ColorJitter(brightness=0, contrast=0, saturation=0, hue=0)"></a>ColorJitter(<em>brightness=0</em>, <em>contrast=0</em>, <em>saturation=0</em>, <em>hue=0</em>)</h3><p>Randomly change the brightness, contrast and saturation of an image.</p>
+<p>随机改变图像的亮度、对比度、饱和度、色调</p>
+<h3 id="FiveCrop-size"><a href="#FiveCrop-size" class="headerlink" title="FiveCrop(size)"></a>FiveCrop(size)</h3><p>Crop the given PIL Image into four corners and the central crop</p>
+<p><strong>size</strong> (<em>sequence</em> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Desired output size of the crop. If size is an <code>int</code> instead of sequence like (h, w), a square crop of size (size, size) is made.</p>
+<p>NOTE:</p>
+<p>This transform returns a tuple of images and there may be a mismatch in the number of inputs and targets your Dataset returns. See below for an example of how to deal with this.</p>
+<h3 id="Grayscale-num-output-channels-1"><a href="#Grayscale-num-output-channels-1" class="headerlink" title="Grayscale(num_output_channels=1)"></a>Grayscale(num_output_channels=1)</h3><p>Convert image to grayscale.</p>
+<p><strong>num_output_channels</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – (1 or 3) number of channels desired for output image</p>
+<h3 id="Pad-padding-fill-0-padding-mode-’constant’"><a href="#Pad-padding-fill-0-padding-mode-’constant’" class="headerlink" title="Pad(padding, fill=0, padding_mode=’constant’)"></a>Pad(<em>padding</em>, <em>fill=0</em>, <em>padding_mode=’constant’</em>)</h3><p>Pad the given PIL Image on all sides with the given “pad” value.</p>
+<p><strong>padding</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a> <em>or</em> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" target="_blank" rel="noopener"><em>tuple</em></a>) – Padding on each border. If a single int is provided this is used to pad all borders. If tuple of length 2 is provided this is the padding on left/right and top/bottom respectively. If a tuple of length 4 is provided this is the padding for the left, top, right and bottom borders respectively.</p>
+<p><strong>fill</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a> <em>or</em> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" target="_blank" rel="noopener"><em>tuple</em></a>) – Pixel fill value for constant fill. Default is 0. If a tuple of length 3, it is used to fill R, G, B channels respectively. This value is only used when the padding_mode is constant</p>
+<p><strong>padding_mode</strong> (<a href="https://docs.python.org/3/library/stdtypes.html#str" target="_blank" rel="noopener"><em>str</em></a>) –</p>
+<p>Type of padding. Should be: constant, edge, reflect or symmetric. Default is constant.</p>
+<ul>
+<li><p>constant: pads with a constant value, this value is specified with fill</p>
+</li>
+<li><p>edge: pads with the last value at the edge of the image</p>
+</li>
+<li><p>reflect: pads with reflection of image without repeating the last value on the edge</p>
+<blockquote>
+<p>For example, padding [1, 2, 3, 4] with 2 elements on both sides in reflect mode will result in [3, 2, 1, 2, 3, 4, 3, 2]</p>
+</blockquote>
+</li>
+<li><p>symmetric: pads with reflection of image repeating the last value on the edge</p>
+<blockquote>
+<p>For example, padding [1, 2, 3, 4] with 2 elements on both sides in symmetric mode will result in [2, 1, 1, 2, 3, 4, 4, 3]</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="RandomAffine-egrees-translate-None-scale-None-shear-None-resample-False-fillcolor-0"><a href="#RandomAffine-egrees-translate-None-scale-None-shear-None-resample-False-fillcolor-0" class="headerlink" title="RandomAffine(egrees, translate=None, scale=None, shear=None, resample=False, fillcolor=0)"></a>RandomAffine(<em>egrees</em>, <em>translate=None</em>, <em>scale=None</em>, <em>shear=None</em>, <em>resample=False</em>, <em>fillcolor=0</em>)</h3><p>Random affine transformation of the image keeping center invariant</p>
+<h3 id="RandomApply-transforms-p-0-5"><a href="#RandomApply-transforms-p-0-5" class="headerlink" title="RandomApply(transforms,p=0.5)"></a>RandomApply(transforms,p=0.5)</h3><p>Apply randomly a list of transformations with a given probability</p>
+<ul>
+<li><strong>transforms</strong> (<a href="https://docs.python.org/3/library/stdtypes.html#list" target="_blank" rel="noopener"><em>list</em></a> <em>or</em> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" target="_blank" rel="noopener"><em>tuple</em></a>) – list of transformations</li>
+<li><strong>p</strong> (<a href="https://docs.python.org/3/library/functions.html#float" target="_blank" rel="noopener"><em>float</em></a>) – probability</li>
+</ul>
+<h3 id="RandomChoise-transforms"><a href="#RandomChoise-transforms" class="headerlink" title="RandomChoise(transforms)"></a>RandomChoise(transforms)</h3><p>Apply single transformation randomly picked from a list</p>
+<h3 id="RandomCrop-size-padding-None-pad-if-needed-False-fill-0-padding-mode-’constant’"><a href="#RandomCrop-size-padding-None-pad-if-needed-False-fill-0-padding-mode-’constant’" class="headerlink" title="RandomCrop(size, padding=None, pad_if_needed=False, fill=0, padding_mode=’constant’)"></a>RandomCrop(<em>size</em>, <em>padding=None</em>, <em>pad_if_needed=False</em>, <em>fill=0</em>, <em>padding_mode=’constant’</em>)</h3><p>Crop the given PIL Image at a random location.</p>
+<ul>
+<li><p><strong>size</strong> (<em>sequence</em> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Desired output size of the crop. If size is an int instead of sequence like (h, w), a square crop (size, size) is made.</p>
+</li>
+<li><p><strong>padding</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a> <em>or</em> <em>sequence**,</em> <em>optional</em>) – Optional padding on each border of the image. Default is None, i.e no padding. If a sequence of length 4 is provided, it is used to pad left, top, right, bottom borders respectively. If a sequence of length 2 is provided, it is used to pad left/right, top/bottom borders, respectively.</p>
+</li>
+<li><p><strong>pad_if_needed</strong> (<em>boolean</em>) – It will pad the image if smaller than the desired size to avoid raising an exception. Since cropping is done after padding, the padding seems to be done at a random offset.</p>
+</li>
+<li><p><strong>fill</strong> – Pixel fill value for constant fill. Default is 0. If a tuple of length 3, it is used to fill R, G, B channels respectively. This value is only used when the padding_mode is constant</p>
+</li>
+<li><p><strong>padding_mode</strong> –</p>
+<p>Type of padding. Should be: constant, edge, reflect or symmetric. Default is constant.</p>
+<ul>
+<li><p>constant: pads with a constant value, this value is specified with fill</p>
+</li>
+<li><p>edge: pads with the last value on the edge of the image</p>
+</li>
+<li><p>reflect: pads with reflection of image (without repeating the last value on the edge)</p>
+<blockquote>
+<p>padding [1, 2, 3, 4] with 2 elements on both sides in reflect mode will result in [3, 2, 1, 2, 3, 4, 3, 2]</p>
+</blockquote>
+</li>
+<li><p>symmetric: pads with reflection of image (repeating the last value on the edge)</p>
+<blockquote>
+<p>padding [1, 2, 3, 4] with 2 elements on both sides in symmetric mode will result in [2, 1, 1, 2, 3, 4, 4, 3]</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="RandomGrayscale-p-0-1"><a href="#RandomGrayscale-p-0-1" class="headerlink" title="RandomGrayscale(p=0.1)"></a>RandomGrayscale(<em>p=0.1</em>)</h3><p>Randomly convert image to grayscale with a probability of p (default 0.1).</p>
+<p><strong>p</strong> (<a href="https://docs.python.org/3/library/functions.html#float" target="_blank" rel="noopener"><em>float</em></a>) – probability that image should be converted to grayscale.</p>
+<h3 id="RandomHorizontalFlip-p-0-5"><a href="#RandomHorizontalFlip-p-0-5" class="headerlink" title="RandomHorizontalFlip(p=0.5)"></a>RandomHorizontalFlip(<em>p=0.5</em>)</h3><p>Horizontally flip the given PIL Image randomly with a given probability.</p>
+<p>p (float) – probability of the image being flipped. Default value is 0.5</p>
+<h3 id="RandomOrder-transforms"><a href="#RandomOrder-transforms" class="headerlink" title="RandomOrder(transforms)"></a>RandomOrder(<em>transforms</em>)</h3><p>Apply a list of transformations in a random order</p>
+<h3 id="RamdomPerspective-distortion-scale-0-5-p-0-5-interpolation-3"><a href="#RamdomPerspective-distortion-scale-0-5-p-0-5-interpolation-3" class="headerlink" title="RamdomPerspective(distortion_scale=0.5, p=0.5, interpolation=3)"></a>RamdomPerspective(<em>distortion_scale=0.5</em>, <em>p=0.5</em>, <em>interpolation=3</em>)</h3><p>Performs Perspective transformation of the given PIL Image randomly with a given probability.</p>
+<p>透视变换</p>
+<ul>
+<li><strong>interpolation</strong> – Default- Image.BICUBIC</li>
+<li><strong>p</strong> (<a href="https://docs.python.org/3/library/functions.html#float" target="_blank" rel="noopener"><em>float</em></a>) – probability of the image being perspectively transformed. Default value is 0.5</li>
+<li><strong>distortion_scale</strong> (<a href="https://docs.python.org/3/library/functions.html#float" target="_blank" rel="noopener"><em>float</em></a>) – it controls the degree of distortion and ranges from 0 to 1. Default value is 0.5.</li>
+</ul>
+<h3 id="RandomSizeCrop-size-scale-0-08-1-0-ratio-0-75-1-3333333333333333-interpolation-2"><a href="#RandomSizeCrop-size-scale-0-08-1-0-ratio-0-75-1-3333333333333333-interpolation-2" class="headerlink" title="RandomSizeCrop(size, scale=(0.08, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2)"></a>RandomSizeCrop(<em>size</em>, <em>scale=(0.08</em>, <em>1.0)</em>, <em>ratio=(0.75</em>, <em>1.3333333333333333)</em>, <em>interpolation=2</em>)</h3><p>Crop the given PIL Image to random size and aspect ratio.</p>
+<p>A crop of random size (default: of 0.08 to 1.0) of the original size and a random aspect ratio (default: of 3/4 to 4/3) of the original aspect ratio is made. This crop is finally resized to given size. This is popularly used to train the Inception networks.</p>
+<ul>
+<li><strong>size</strong> – expected output size of each edge</li>
+<li><strong>scale</strong> – range of size of the origin size cropped</li>
+<li><strong>ratio</strong> – range of aspect ratio of the origin aspect ratio cropped</li>
+<li><strong>interpolation</strong> – Default: PIL.Image.BILINEAR</li>
+</ul>
+<h3 id="RandomRotation-degrees-resample-False-expand-False-center-None"><a href="#RandomRotation-degrees-resample-False-expand-False-center-None" class="headerlink" title="RandomRotation(degrees, resample=False, expand=False, center=None)"></a>RandomRotation(<em>degrees</em>, <em>resample=False</em>, <em>expand=False</em>, <em>center=None</em>)</h3><p>Rotate the image by angle.</p>
+<ul>
+<li><strong>degrees</strong> (<em>sequence</em> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#float" target="_blank" rel="noopener"><em>float</em></a> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Range of degrees to select from. If degrees is a number instead of sequence like (min, max), the range of degrees will be (-degrees, +degrees).</li>
+<li><strong>resample</strong> (<em>{PIL.Image.NEAREST**,</em> <em>PIL.Image.BILINEAR**,</em> <em>PIL.Image.BICUBIC}<strong>,</strong>optional</em>) – An optional resampling filter. See <a href="https://pillow.readthedocs.io/en/latest/handbook/concepts.html#filters" target="_blank" rel="noopener">filters</a> for more information. If omitted, or if the image has mode “1” or “P”, it is set to PIL.Image.NEAREST.</li>
+<li><strong>expand</strong> (<a href="https://docs.python.org/3/library/functions.html#bool" target="_blank" rel="noopener"><em>bool</em></a><em>,</em> <em>optional</em>) – Optional expansion flag. If true, expands the output to make it large enough to hold the entire rotated image. If false or omitted, make the output image the same size as the input image. Note that the expand flag assumes rotation around the center and no translation.</li>
+<li><strong>center</strong> (<em>2-tuple**,</em> <em>optional</em>) – Optional center of rotation. Origin is the upper left corner. Default is the center of the image.</li>
+</ul>
+<h3 id="RandomVerticalFilp-p-0-5"><a href="#RandomVerticalFilp-p-0-5" class="headerlink" title="RandomVerticalFilp(p=0.5)"></a>RandomVerticalFilp(p=0.5)</h3><p>Vertically flip the given PIL Image randomly with a given probability.</p>
+<p>p (float) – probability of the image being flipped. Default value is 0.5</p>
+<h3 id="Resize-size-interpolation-2"><a href="#Resize-size-interpolation-2" class="headerlink" title="Resize(size, interpolation=2)"></a>Resize(size, interpolation=2)</h3><p>Resize the input PIL Image to the given size.</p>
+<ul>
+<li><strong>size</strong> (<em>sequence</em> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Desired output size. If size is a sequence like (h, w), output size will be matched to this. If size is an int, smaller edge of the image will be matched to this number. i.e, if height &gt; width, then image will be rescaled to (size * height / width, size)</li>
+<li><strong>interpolation</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a><em>,</em> <em>optional</em>) – Desired interpolation. Default is<code>PIL.Image.BILINEAR</code></li>
+</ul>
+<h3 id="TenCrop-size-vertical-flip-False"><a href="#TenCrop-size-vertical-flip-False" class="headerlink" title="TenCrop(size, vertical_flip=False)"></a>TenCrop(size, vertical_flip=False)</h3><p>Crop the given PIL Image into four corners and the central crop plus the flipped version of these (horizontal flipping is used by default)</p>
+<ul>
+<li><strong>size</strong> (<em>sequence</em> <em>or</em> <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Desired output size of the crop. If size is an int instead of sequence like (h, w), a square crop (size, size) is made.</li>
+<li><strong>vertical_flip</strong> (<a href="https://docs.python.org/3/library/functions.html#bool" target="_blank" rel="noopener"><em>bool</em></a>) – Use vertical flipping instead of horizontal</li>
+</ul>
+<h3 id="Normalize-mean-std-inplace-False"><a href="#Normalize-mean-std-inplace-False" class="headerlink" title="Normalize(mean, std, inplace=False)"></a>Normalize(<em>mean</em>, <em>std</em>, <em>inplace=False</em>)</h3><p>这是针对于Tensor的函数</p>
+<p>Normalize a tensor image with mean and standard deviation. Given mean: <code>(M1,...,Mn)</code> and std: <code>(S1,..,Sn)</code> for <code>n</code> channels, this transform will normalize each channel of the input <code>torch.*Tensor</code> i.e. <code>input[channel] = (input[channel] - mean[channel]) / std[channel]</code></p>
+<ul>
+<li><strong>mean</strong> (<em>sequence</em>) – Sequence of means for each channel.</li>
+<li><strong>std</strong> (<em>sequence</em>) – Sequence of standard deviations for each channel.</li>
+<li><strong>inplace</strong> (<a href="https://docs.python.org/3/library/functions.html#bool" target="_blank" rel="noopener"><em>bool</em></a><em>,**optional</em>) – Bool to make this operation in-place.</li>
+</ul>
+<h3 id="ToPILImage-mode-None"><a href="#ToPILImage-mode-None" class="headerlink" title="ToPILImage(mode=None)"></a>ToPILImage(<em>mode=None</em>)</h3><p>将Tensor格式图片或者numpy格式图片转化为PIL格式图片</p>
+<p>Convert a tensor or an ndarray to PIL Image.</p>
+<p>Converts a torch.*Tensor of shape C x H x W or a numpy ndarray of shape H x W x C to a PIL Image while preserving the value range.</p>
+<p><strong>mode</strong> (<a href="https://pillow.readthedocs.io/en/latest/handbook/concepts.html#concept-modes" target="_blank" rel="noopener">PIL.Image mode</a>) –</p>
+<p>color space and pixel depth of input data (optional). If <code>mode</code> is <code>None</code> (default) there are some assumptions made about the input data:</p>
+<blockquote>
+<ul>
+<li>If the input has 4 channels, the <code>mode</code> is assumed to be <code>RGBA</code>.</li>
+<li>If the input has 3 channels, the <code>mode</code> is assumed to be <code>RGB</code>.</li>
+<li>If the input has 2 channels, the <code>mode</code> is assumed to be <code>LA</code>.</li>
+<li>If the input has 1 channel, the <code>mode</code> is determined by the data type (i.e <code>int</code>, <code>float</code>, <code>short</code>).</li>
+</ul>
+</blockquote>
+<h3 id="Totensor"><a href="#Totensor" class="headerlink" title="Totensor()"></a>Totensor()</h3><p>将PILImage或者numpy图片转化为tensor</p>
+<p>Convert a <code>PIL Image</code> or <code>numpy.ndarray</code> to tensor.</p>
+<p>Converts a PIL Image or numpy.ndarray (H x W x C) in the range [0, 255] to a torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0] if the PIL Image belongs to one of the modes (L, LA, P, I, F, RGB, YCbCr, RGBA, CMYK, 1) or if the numpy.ndarray has dtype = np.uint8</p>
+<p>In the other cases, tensors are returned without scaling.</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">pangzibo243</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://litianbo243.github.io/2019/09/06/数据预处理/">https://litianbo243.github.io/2019/09/06/数据预处理/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/deeplearning/">deeplearning</a><a class="post-meta__tags" href="/tags/学习深度学习/">学习深度学习</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_zhifubao_code.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_weixin_code.png"><div class="post-qr-code__desc">微信打赏</div></div></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/09/09/卷积-池化/"><i class="fa fa-chevron-left">  </i><span>卷积 池化</span></a></div><div class="next-post pull-right"><a href="/2019/09/04/数据集划分/"><span>数据集划分</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By pangzibo243</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
