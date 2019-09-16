@@ -16,14 +16,13 @@
 <p>以上都是不用动手的，真正需要配置的是自定义网络</p>
 <h2 id="默认网络"><a href="#默认网络" class="headerlink" title="默认网络"></a>默认网络</h2><p>使用docker network ls命令列出这些网络</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker network ls</span><br><span class="line"></span><br><span class="line"><span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">NETWORK ID          NAME                DRIVER              SCOPE</span></span><br><span class="line"><span class="string">1e4b5374565f        bridge              bridge              local</span></span><br><span class="line"><span class="string">f48367672056        host                host                local</span></span><br><span class="line"><span class="string">a2545c48ca42        none                null                local</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br></pre></td></tr></table></figure>
-
-<p>Docker内置这三个网络，运行容器时，你可以使用该–network标志来指定容器应连接到哪些网络</p>
-<p><strong>bridge</strong>网络代表docker0所有Docker安装中存在的网络。除非你使用该docker run –network=<network>选项指定，否则Docker守护程序默认将容器连接到此网络</network></p>
-<p>我们在使用docker run创建Docker容器时，可以用 –net 选项指定容器的网络模式，Docker可以有以下4种网络模式：</p>
-<p><strong>host</strong>模式：使用 –net=host 指定</p>
-<p><strong>none</strong>模式：使用 –net=none 指定</p>
-<p><strong>bridge</strong>模式：使用 –net=bridge 指定，默认设置</p>
-<p><strong>container</strong>模式：使用 –net=container:NAME_or_ID 指定</p>
+<p>Docker内置这三个网络，运行容器时，你可以使用该—network标志来指定容器应连接到哪些网络</p>
+<p><strong>bridge</strong>网络代表docker0所有Docker安装中存在的网络。除非你使用该docker run —network=<network>选项指定，否则Docker守护程序默认将容器连接到此网络</network></p>
+<p>我们在使用docker run创建Docker容器时，可以用 —net 选项指定容器的网络模式，Docker可以有以下4种网络模式：</p>
+<p><strong>host</strong>模式：使用 —net=host 指定</p>
+<p><strong>none</strong>模式：使用 —net=none 指定</p>
+<p><strong>bridge</strong>模式：使用 —net=bridge 指定，默认设置</p>
+<p><strong>container</strong>模式：使用 —net=container:NAME_or_ID 指定</p>
 <h2 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h2><p>相当于Vmware中的桥接模式，与宿主机在同一个网络中，但没有独立IP地址</p>
 <p>容器将不会虚拟出自己的网卡，配置自己的IP等，而是使用宿主机的IP和端口</p>
 <h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><p>这个模式指定新创建的容器和已经存在的一个容器共享一个Network Namespace，而不是和宿主机共享</p>
@@ -37,26 +36,20 @@
 <h2 id="自定义网络"><a href="#自定义网络" class="headerlink" title="自定义网络"></a>自定义网络</h2><p>建议使用自定义的网桥来控制哪些容器可以相互通信，还可以自动DNS解析容器名称到IP地址</p>
 <p>Docker提供了创建这些网络的默认网络驱动程序，你可以创建一个新的Bridge网络</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker network create --driver bridge ltb_test_net</span><br></pre></td></tr></table></figure>
-
 <p>创建网络后，可以看到新增加了一个网桥br-762457e516bc</p>
 <p>可以通过docker network inspect查看网络配置信息</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker network inspect ltb</span><br></pre></td></tr></table></figure>
-
 <p> 容器要使用新的网络，需要在启动时通过 <code>--network</code> 指定</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it --network=ltb_test_net 7c1fe /bin/bash</span><br></pre></td></tr></table></figure>
-
 <p>同一网络中的容器、网关之间都是可以通信的</p>
 <p>不同网络容器通信可以用docker network connect命令实现</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker network connect ltb_net 7c1fe</span><br></pre></td></tr></table></figure>
-
 <p>从 Docker 1.10 版本开始，docker daemon 实现了一个内嵌的 DNS server，使容器可以直接通过“容器名”通信。方法很简单，只要在启动时用 <code>--name</code> 为容器命名就可以了</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it --network=my_net2 --name=bbox1 busybox</span><br><span class="line">docker run -it --network=my_net2 --name=bbox2 busybox</span><br></pre></td></tr></table></figure>
-
 <p>然后，bbox2 就可以直接 ping 到 bbox1 了</p>
 <p>使用 docker DNS 有个限制：<strong>只能在 user-defined 网络中使用</strong>。也就是说，默认的 bridge 网络是无法使用 DNS 的</p>
 <p>可以通过docker network rm 实现</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker network rm ltb_test_net</span><br></pre></td></tr></table></figure>
-
 <p>再ifconfig时,网桥已经不见了</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/zuxing/articles/8780661.html" target="_blank" rel="noopener">https://www.cnblogs.com/zuxing/articles/8780661.html</a></p>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">pangzibo243</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://litianbo243.github.io/2019/08/10/docker 网络指南/">https://litianbo243.github.io/2019/08/10/docker 网络指南/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/网络/">网络</a><a class="post-meta__tags" href="/tags/docker/">docker</a><a class="post-meta__tags" href="/tags/虚拟化/">虚拟化</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_zhifubao_code.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_weixin_code.png"><div class="post-qr-code__desc">微信打赏</div></div></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/08/10/dockerfile构建指南/"><i class="fa fa-chevron-left">  </i><span>dockerfile构建指南</span></a></div><div class="next-post pull-right"><a href="/2019/08/09/Ubuntu 软件和软件源/"><span>Ubuntu 软件和软件源</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By pangzibo243</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
