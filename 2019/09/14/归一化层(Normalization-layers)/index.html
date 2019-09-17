@@ -43,7 +43,7 @@ y_i = \gamma \hat x_i + \beta \equiv BN_{\gamma , \beta}(x_i)</script><p><strong
 <p><strong>和BatchNorm的区别：</strong></p>
 <p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20181107181313266.png" alt></p>
 <p><strong>公式：</strong></p>
-<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180714182557220.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180714182557221.jpg" alt></p>
 <p><strong>代码：</strong></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># Without Learnable Parameters</span></span><br><span class="line">m = nn.InstanceNorm2d(<span class="number">100</span>)</span><br><span class="line"><span class="comment"># With Learnable Parameters</span></span><br><span class="line">m = nn.InstanceNorm2d(<span class="number">100</span>, affine=<span class="literal">True</span>)</span><br><span class="line">input = torch.randn(<span class="number">20</span>, <span class="number">100</span>, <span class="number">35</span>, <span class="number">45</span>)</span><br><span class="line">output = m(input)</span><br></pre></td></tr></table></figure>
 <h2 id="Group-Normalization"><a href="#Group-Normalization" class="headerlink" title="Group Normalization"></a>Group Normalization</h2><p>主要是针对Batch Normalization对小batchsize效果差，GN将channel方向分group，然后每个group内做归一化，算(C//G)<em>H</em>W的均值，这样与batchsize无关，不受其约束。</p>
