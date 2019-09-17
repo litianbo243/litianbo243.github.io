@@ -11,7 +11,7 @@
 <p>一句话解释：逆卷积相对于卷积在神经网络结构的正向和反向传播中做相反的运算</p>
 <p>逆卷积(Deconvolution)比较容易引起误会，转置卷积(Transposed Convolution)是一个更为合适的叫法</p>
 <p>输入矩阵可展开为16维向量，记作<img src="https://www.zhihu.com/equation?tex=x" alt="[公式]"><br>输出矩阵可展开为4维向量，记作<img src="https://www.zhihu.com/equation?tex=y" alt="[公式]"><br>卷积运算可表示为<img src="https://www.zhihu.com/equation?tex=y+%3D+Cx" alt="[公式]"></p>
-<p>反向传播时为<img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+x%7D+%3D+%5Cbegin%7Bbmatrix%7D+%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+x_1%7D+%5C%5C+%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+x_2%7D+%5C%5C+...+%5C%5C+%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+x_n%7D+%5C%5C+%5Cend%7Bbmatrix%7D+%3D+%5Cbegin%7Bbmatrix%7D+C_%7B%2A%2C1%7D%5ET%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+y%7D+%5C%5C+C_%7B%2A%2C2%7D%5ET%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+y%7D+%5C%5C+...+%5C%5C+C_%7B%2A%2Cn%7D%5ET%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+y%7D+%5C%5C+%5Cend%7Bbmatrix%7D+%3D+%5Cbegin%7Bbmatrix%7D+C_%7B%2A%2C1%7D%5ET+%5C%5C+C_%7B%2A%2C2%7D%5ET+%5C%5C+...+%5C%5C+C_%7B%2A%2Cn%7D%5ET+%5C%5C+%5Cend%7Bbmatrix%7D+%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+y%7D+%3D+C%5ET+%5Cfrac%7B%5Cpartial+Loss%7D%7B%5Cpartial+y%7D" alt="[å¬å¼]"></p>
+<p>反向传播时为<img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/equation.svg" alt></p>
 <p>所谓逆卷积其实就是正向时左乘<img src="https://www.zhihu.com/equation?tex=C%5ET" alt="[公式]">，而反向时左乘<img src="https://www.zhihu.com/equation?tex=%28C%5ET%29%5ET" alt="[公式]">，即<img src="https://www.zhihu.com/equation?tex=C" alt="[公式]">的运算。</p>
 <h2 id="转置卷积-上采样-公式推导"><a href="#转置卷积-上采样-公式推导" class="headerlink" title="转置卷积 上采样 公式推导"></a>转置卷积 上采样 公式推导</h2><p>Input:</p>
 <script type="math/tex; mode=display">
