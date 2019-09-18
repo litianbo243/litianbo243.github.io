@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="深度学习之GPU和显存分析"><meta name="keywords" content="deeplearning,学习深度学习"><meta name="author" content="pangzibo243"><meta name="copyright" content="pangzibo243"><title>深度学习之GPU和显存分析 | pangzibo243's blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深度学习之GPU和显存分析"><span class="toc-text">深度学习之GPU和显存分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#预备知识"><span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显存分析"><span class="toc-text">显存分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AlexNet-分析"><span class="toc-text">AlexNet 分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_faceQ.png"></div><div class="author-info__name text-center">pangzibo243</div><div class="author-info__description text-center">pangzibo243's blog</div><div class="follow-button"><a href="https://github.com/litianbo243">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">37</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">34</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">pangzibo243's blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">深度学习之GPU和显存分析</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-18</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/deeplearning/">deeplearning</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="深度学习之GPU和显存分析"><a href="#深度学习之GPU和显存分析" class="headerlink" title="深度学习之GPU和显存分析"></a>深度学习之GPU和显存分析</h1><h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p><code>nvidia-smi</code>是Nvidia显卡命令行管理套件，基于NVML库，旨在管理和监控Nvidia GPU设备.</p>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180518221451684.jpeg" alt></p>
+<p>这是nvidia-smi命令的输出，其中最重要的两个指标：</p>
+<ul>
+<li>显存占用</li>
+<li>GPU利用率</li>
+<li>显存占用和GPU利用率是两个不一样的东西，显卡是由GPU计算单元和显存等组成的，显存和GPU的关系有点类似于内存和CPU的关系。</li>
+</ul>
+<p>推荐工具：gpustat</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install gpustat</span><br><span class="line">watch --color -n1 gpustat -cpu</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180518221503825.jpeg" alt></p>
+<ul>
+<li><strong>显存可以看成是空间，类似于内存。</strong></li>
+<li>显存用于存放模型，数据</li>
+<li>显存越大，所能运行的网络也就越大</li>
+<li><strong>GPU计算单元</strong>类似于CPU中的核，用来进行数值计算。衡量计算量的单位是flop： <em>the number of floating-point multiplication-adds</em>，浮点数先乘后加算一个flop。计算能力越强大，速度越快。衡量计算能力的单位是flops： 每秒能执行的flop数量</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>*<span class="number">2</span>+<span class="number">3</span>                  <span class="number">1</span> flop</span><br><span class="line"><span class="number">1</span>*<span class="number">2</span> + <span class="number">3</span>*<span class="number">4</span> + <span class="number">4</span>*<span class="number">5</span>        <span class="number">3</span> flop</span><br></pre></td></tr></table></figure>
+<h2 id="显存分析"><a href="#显存分析" class="headerlink" title="显存分析"></a>显存分析</h2><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>Byte = <span class="number">8</span> bit</span><br><span class="line"><span class="number">1</span>K = <span class="number">1024</span> Byte</span><br><span class="line"><span class="number">1</span>M = <span class="number">1024</span> K</span><br><span class="line"><span class="number">1</span>G = <span class="number">1024</span> M</span><br><span class="line"><span class="number">1</span>T = <span class="number">1024</span> G</span><br><span class="line"> </span><br><span class="line"><span class="number">10</span> K = <span class="number">10</span>*<span class="number">1024</span> Byte</span><br></pre></td></tr></table></figure>
+<p>除了<code>K</code>、<code>M</code>，<code>G</code>，<code>T</code>等之外，我们常用的还有<code>KB</code> 、<code>MB</code>，<code>GB</code>，<code>TB</code> 。二者有细微的差别。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>Byte = <span class="number">8</span> bit</span><br><span class="line"><span class="number">1</span>KB = <span class="number">1000</span> Byte</span><br><span class="line"><span class="number">1</span>MB = <span class="number">1000</span> KB</span><br><span class="line"><span class="number">1</span>GB = <span class="number">1000</span> MB</span><br><span class="line"><span class="number">1</span>TB = <span class="number">1000</span> GB</span><br><span class="line"> </span><br><span class="line"><span class="number">10</span> KB = <span class="number">10000</span> Byte</span><br></pre></td></tr></table></figure>
+<p>Float32 是在深度学习中最常用的数值类型，称为单精度浮点数，每一个单精度浮点数占用4Byte的显存。</p>
+<p>举例来说：有一个1000x1000的 矩阵，float32，那么占用的显存差不多就是</p>
+<blockquote>
+<p>1000x1000x4 Byte = 4MB</p>
+</blockquote>
+<p>32x3x256x256的四维数组（BxCxHxW）占用显存为：24M</p>
+<p><strong>神经网络显存占用</strong></p>
+<p>神经网络模型占用的显存包括：</p>
+<ul>
+<li>模型自身的参数</li>
+<li>模型的输入输出</li>
+</ul>
+<p>举例来说，对于如下图所示的一个全连接网络(不考虑偏置项b)</p>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180518221531534.jpeg" alt></p>
+<p>模型的输入输出和参数</p>
+<p>模型的显存占用包括：</p>
+<ul>
+<li>参数：二维数组 W</li>
+<li>模型的输出： 二维数组 Y</li>
+</ul>
+<p>输入X可以看成是上一层的输出，因此把它的显存占用归于上一层。</p>
+<p><strong>这么看来显存占用就是W和Y两个数组？</strong></p>
+<p><strong>并非如此！！！</strong></p>
+<p>只有有参数的层，才会有显存占用。这部份的显存占用和<strong>输入无关</strong>，模型加载完成之后就会占用。</p>
+<p><strong>有参数的层主要包括：</strong></p>
+<ul>
+<li>卷积</li>
+<li>全连接</li>
+<li>BatchNorm</li>
+<li>Embedding层</li>
+<li>… …</li>
+</ul>
+<p><strong>无参数的层</strong>：</p>
+<ul>
+<li>多数的激活层(Sigmoid/ReLU)</li>
+<li>池化层</li>
+<li>Dropout</li>
+<li>… …</li>
+</ul>
+<p>Linear(M-&gt;N): 参数数目：M×N</p>
+<p>Conv2d(Cin, Cout, K): 参数数目：Cin × Cout × K × K</p>
+<p>BatchNorm(N): 参数数目： 2N</p>
+<p>Embedding(N,W): 参数数目： N × W</p>
+<p><strong>参数占用显存 = 参数数目×n</strong></p>
+<p><em>n = 4 ：float32</em></p>
+<p><em>n = 2 : float16</em></p>
+<p><em>n = 8 : double64</em></p>
+<p>在PyTorch中，当你执行完<code>model=MyGreatModel().cuda()</code>之后就会占用相应的显存，占用的显存大小基本与上述分析的显存差不多（<em>会稍大一些，因为其它开销</em>）。</p>
+<p><strong>梯度与动量的显存占用</strong></p>
+<p>举例来说， 优化器如果是<strong>SGD</strong>：</p>
+<p>可以看出来，除了保存W之外还要保存对应的梯度∇F(W) ，因此显存占用等于参数占用的显存x2,</p>
+<p>如果是带<strong>Momentum-SGD</strong></p>
+<p>这时候还需要保存动量， 因此显存x3</p>
+<p>如果是<strong>Adam</strong>优化器，动量占用的显存更多，显存x4</p>
+<p><strong>输入输出的显存占用</strong></p>
+<p>这部份的显存主要看输出的feature map 的形状。</p>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180518221548749.jpeg" alt></p>
+<p>据此可以计算出每一层输出的Tensor的形状，然后就能计算出相应的显存占用。</p>
+<p><strong>深度学习中神经网络的显存占用，我们可以得到如下公式：</strong></p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">显存占用 = 模型显存占用 + batch_size × 每个样本的显存占用</span><br></pre></td></tr></table></figure>
+<h2 id="AlexNet-分析"><a href="#AlexNet-分析" class="headerlink" title="AlexNet 分析"></a>AlexNet 分析</h2><p><strong>AlexNet的分析如下图，左边是每一层的参数数目（不是显存占用），右边是消耗的计算资源</strong></p>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/20180518221638784.jpeg" alt></p>
+<p>可以看出：</p>
+<ul>
+<li>全连接层占据了绝大多数的参数</li>
+<li>卷积层的计算量最大</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/wsxzhbzl/article/details/88815488" target="_blank" rel="noopener">https://blog.csdn.net/wsxzhbzl/article/details/88815488</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">pangzibo243</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://litianbo243.github.io/2019/09/18/深度学习之GPU和显存分析/">https://litianbo243.github.io/2019/09/18/深度学习之GPU和显存分析/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/deeplearning/">deeplearning</a><a class="post-meta__tags" href="/tags/学习深度学习/">学习深度学习</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_zhifubao_code.jpg"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_weixin_code.jpg"><div class="post-qr-code__desc">微信打赏</div></div></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/09/16/优化器-介绍/"><span>优化器 介绍</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By pangzibo243</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
