@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Java 字符串"><meta name="keywords" content="java,学习java"><meta name="author" content="pangzibo243"><meta name="copyright" content="pangzibo243"><title>Java 字符串 | pangzibo243's blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-字符串"><span class="toc-text">Java 字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串常量池"><span class="toc-text">字符串常量池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式化字符串"><span class="toc-text">格式化字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期和时间字符串格式化"><span class="toc-text">日期和时间字符串格式化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式"><span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串生成器"><span class="toc-text">字符串生成器</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_faceQ.png"></div><div class="author-info__name text-center">pangzibo243</div><div class="author-info__description text-center">pangzibo243's blog</div><div class="follow-button"><a href="https://github.com/litianbo243">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">42</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">36</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">10</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">pangzibo243's blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Java 字符串</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-29</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/java/">java</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="Java-字符串"><a href="#Java-字符串" class="headerlink" title="Java 字符串"></a>Java 字符串</h1><h2 id="字符串常量池"><a href="#字符串常量池" class="headerlink" title="字符串常量池"></a>字符串常量池</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">"hello"</span>;</span><br><span class="line">    String s2 = <span class="keyword">new</span> String(<span class="string">"hello"</span>);</span><br><span class="line">    System.out.println(s1 == s2);   <span class="comment">//false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/16aede2ab2ddeeca.jpg" alt></p>
+<ul>
+<li><p>对于这种直接通过双引号””声明字符串的方式, 虚拟机首先会到字符串常量池中查找该字符串是否已经存在. 如果存在会直接返回该引用, 如果不存在则会在堆内存中创建该字符串对象, 然后到字符串常量池中注册该字符串.</p>
+</li>
+<li><p>当我们使用new关键字创建字符串对象的时候, JVM将不会查询字符串常量池, 它将会直接在堆内存中创建一个字符串对象, 并返回给所属变量.</p>
+</li>
+</ul>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><p>String类的format()方法用于创建格式化的字符串以及连接多个字符串对象。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%s</td>
+<td>字符串类型</td>
+<td>“mingrisoft”</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>字符类型</td>
+<td>‘m’</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>布尔类型</td>
+<td>true</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>整数类型（十进制）</td>
+<td>99</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>整数类型（十六进制）</td>
+<td>FF</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>整数类型（八进制）</td>
+<td>77</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点类型</td>
+<td>99.99</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>十六进制浮点类型</td>
+<td>FF.35AE</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>指数类型</td>
+<td>9.38e+5</td>
+</tr>
+<tr>
+<td>%g</td>
+<td>通用浮点类型（f和e类型中较短的）</td>
+<td></td>
+</tr>
+<tr>
+<td>%h</td>
+<td>散列码</td>
+<td></td>
+</tr>
+<tr>
+<td>%%</td>
+<td>百分比类型</td>
+<td>％</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>换行符</td>
+<td></td>
+</tr>
+<tr>
+<td>%tx</td>
+<td>日期与时间类型（x代表不同的日期与时间转换符</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">    String str=<span class="keyword">null</span>;  </span><br><span class="line">    str=String.format(<span class="string">"Hi,%s"</span>, <span class="string">"王力"</span>);  </span><br><span class="line">    System.out.println(str);  </span><br><span class="line">    str=String.format(<span class="string">"Hi,%s:%s.%s"</span>, <span class="string">"王南"</span>,<span class="string">"王力"</span>,<span class="string">"王张"</span>);            </span><br><span class="line">    System.out.println(str);                           </span><br><span class="line">    System.out.printf(<span class="string">"字母a的大写是：%c %n"</span>, <span class="string">'A'</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"3&gt;7的结果是：%b %n"</span>, <span class="number">3</span>&gt;<span class="number">7</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"100的一半是：%d %n"</span>, <span class="number">100</span>/<span class="number">2</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"100的16进制数是：%x %n"</span>, <span class="number">100</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"100的8进制数是：%o %n"</span>, <span class="number">100</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"50元的书打8.5折扣是：%f 元%n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"上面价格的16进制数是：%a %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数表示：%e %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数和浮点数结果的长度较短的是：%g %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"上面的折扣是%d%% %n"</span>, <span class="number">85</span>);  </span><br><span class="line">    System.out.printf(<span class="string">"字母A的散列码是：%h %n"</span>, <span class="string">'A'</span>);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Hi,王力  </span></span><br><span class="line"><span class="comment">Hi,王南:王力.王张  </span></span><br><span class="line"><span class="comment">字母a的大写是：A   </span></span><br><span class="line"><span class="comment">3&gt;7的结果是：false   </span></span><br><span class="line"><span class="comment">100的一半是：50   </span></span><br><span class="line"><span class="comment">100的16进制数是：64   </span></span><br><span class="line"><span class="comment">100的8进制数是：144   </span></span><br><span class="line"><span class="comment">50元的书打8.5折扣是：42.500000 元  </span></span><br><span class="line"><span class="comment">上面价格的16进制数是：0x1.54p5   </span></span><br><span class="line"><span class="comment">上面价格的指数表示：4.250000e+01   </span></span><br><span class="line"><span class="comment">上面价格的指数和浮点数结果的长度较短的是：42.5000   </span></span><br><span class="line"><span class="comment">上面的折扣是85%   </span></span><br><span class="line"><span class="comment">字母A的散列码是：41</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标    志</th>
+<th>说    明</th>
+<th>示    例</th>
+<th>结    果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>为正数或者负数添加符号</td>
+<td>(“%+d”,15)</td>
+<td>+15</td>
+</tr>
+<tr>
+<td>−</td>
+<td>左对齐</td>
+<td>(“%-5d”,15)</td>
+<td>\</td>
+<td>15   \</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>数字前面补0</td>
+<td>(“%04d”, 99)</td>
+<td>0099</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>在整数之前添加指定数量的空格</td>
+<td>(“% 4d”, 99)</td>
+<td>\</td>
+<td>99\</td>
+<td></td>
+</tr>
+<tr>
+<td>,</td>
+<td>以“,”对数字分组</td>
+<td>(“%,f”, 9999.99)</td>
+<td>9,999.990000</td>
+</tr>
+<tr>
+<td>(</td>
+<td>使用括号包含负数</td>
+<td>(“%(f”, -99.99)</td>
+<td>(99.990000)</td>
+</tr>
+<tr>
+<td>#</td>
+<td>如果是浮点数则包含小数点，如果是16进制或8进制则添加0x或0</td>
+<td>(“%#x”, 99)(“%#o”, 99)</td>
+<td>0x630143</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>格式化前一个转换符所描述的参数</td>
+<td>(“%f和%&lt;3.2f”, 99.45)</td>
+<td>99.450000和99.45</td>
+</tr>
+<tr>
+<td>$</td>
+<td>被格式化的参数索引</td>
+<td>(“%1$d,%2$s”, 99,”abc”)</td>
+<td>99,abc</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">    String str=<span class="keyword">null</span>;  </span><br><span class="line">    <span class="comment">//$使用  </span></span><br><span class="line">    str=String.format(<span class="string">"格式参数$的使用：%1$d,%2$s"</span>, <span class="number">99</span>,<span class="string">"abc"</span>);             </span><br><span class="line">    System.out.println(str);                       </span><br><span class="line">    <span class="comment">//+使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"显示正负数的符号：%+d与%d%n"</span>, <span class="number">99</span>,-<span class="number">99</span>);  </span><br><span class="line">    <span class="comment">//补O使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"最牛的编号是：%03d%n"</span>, <span class="number">7</span>);  </span><br><span class="line">    <span class="comment">//空格使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"Tab键的效果是：% 8d%n"</span>, <span class="number">7</span>);  </span><br><span class="line">    <span class="comment">//.使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"整数分组的效果是：%,d%n"</span>, <span class="number">9989997</span>);  </span><br><span class="line">    <span class="comment">//空格和小数点后面个数  </span></span><br><span class="line">    System.out.printf(<span class="string">"一本书的价格是：% 50.5f元%n"</span>, <span class="number">49.8</span>);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">格式参数$的使用：99,abc  </span></span><br><span class="line"><span class="comment">显示正负数的符号：+99与-99  </span></span><br><span class="line"><span class="comment">最牛的编号是：007  </span></span><br><span class="line"><span class="comment">Tab键的效果是：       7  </span></span><br><span class="line"><span class="comment">整数分组的效果是：9,989,997  </span></span><br><span class="line"><span class="comment">一本书的价格是：                                          49.80000元</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="日期和时间字符串格式化"><a href="#日期和时间字符串格式化" class="headerlink" title="日期和时间字符串格式化"></a>日期和时间字符串格式化</h2><p>字符串格式中还有<strong>%tx</strong>转换符没有详细介绍，它是专门用来格式化日期和时 间的。<strong>%tx</strong>转换符中的<strong>x</strong>代表另外的处理日期和时间格式的转换符，它们的组合能够将日期和时间格式化成多种格式。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c</td>
+<td>包括全部日期和时间信息</td>
+<td>星期六 十月 27 14:21:20 CST 2007</td>
+</tr>
+<tr>
+<td>F</td>
+<td>“年-月-日”格式</td>
+<td>2007-10-27</td>
+</tr>
+<tr>
+<td>D</td>
+<td>“月/日/年”格式</td>
+<td>10/27/07</td>
+</tr>
+<tr>
+<td>r</td>
+<td>“HH:MM:SS PM”格式（12时制）</td>
+<td>02:25:51 下午</td>
+</tr>
+<tr>
+<td>T</td>
+<td>“HH:MM:SS”格式（24时制）</td>
+<td>14:28:16</td>
+</tr>
+<tr>
+<td>R</td>
+<td>“HH:MM”格式（24时制）</td>
+<td>14:28</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">    Date date=<span class="keyword">new</span> Date();                                  </span><br><span class="line">    <span class="comment">//c的使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"全部日期和时间信息：%tc%n"</span>,date);          </span><br><span class="line">    <span class="comment">//f的使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"年-月-日格式：%tF%n"</span>,date);  </span><br><span class="line">    <span class="comment">//d的使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"月/日/年格式：%tD%n"</span>,date);  </span><br><span class="line">    <span class="comment">//r的使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"HH:MM:SS PM格式（12时制）：%tr%n"</span>,date);  </span><br><span class="line">    <span class="comment">//t的使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"HH:MM:SS格式（24时制）：%tT%n"</span>,date);  </span><br><span class="line">    <span class="comment">//R的使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"HH:MM格式（24时制）：%tR"</span>,date);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">全部日期和时间信息：星期一 九月 10 10:43:36 CST 2012  </span></span><br><span class="line"><span class="comment">年-月-日格式：2012-09-10  </span></span><br><span class="line"><span class="comment">月/日/年格式：09/10/12  </span></span><br><span class="line"><span class="comment">HH:MM:SS PM格式（12时制）：10:43:36 上午  </span></span><br><span class="line"><span class="comment">HH:MM:SS格式（24时制）：10:43:36  </span></span><br><span class="line"><span class="comment">HH:MM格式（24时制）：10:43</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p><strong>元字符</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>匹配除换行符以外的任意字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配字母或数字或下划线或汉字</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任意的空白符</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配数字</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串的开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串的结束</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配字符串的结束</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>重复</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>重复零次或更多次</td>
+</tr>
+<tr>
+<td>+</td>
+<td>重复一次或更多次</td>
+</tr>
+<tr>
+<td>?</td>
+<td>重复零次或一次</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>重复n次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>重复n次或更多次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>重复n到m次</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>字符类</strong></p>
+<p>像[aeiou]就匹配任何一个英文元音字母，[.?!]匹配标点符号(.或?或!)。<br>我们也可以轻松地指定一个字符范围，像[0-9]代表的含意与\d就是完全一致的：一位数字；同理[a-z0-9A-Z_]也完全等同于\w（如果只考虑英文的话）。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.*;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegexExample1</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">      String content = <span class="string">"I am noob "</span> +</span><br><span class="line">        <span class="string">"from runoob.com."</span>;</span><br><span class="line"> </span><br><span class="line">      String pattern = <span class="string">".*runoob.*"</span>;</span><br><span class="line"> </span><br><span class="line">      <span class="keyword">boolean</span> isMatch = Pattern.matches(pattern, content);</span><br><span class="line">      System.out.println(<span class="string">"字符串中是否包含了 'runoob' 子字符串? "</span> + isMatch);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="comment">//字符串中是否包含了 'runoob' 子字符串? true</span></span><br></pre></td></tr></table></figure>
+<h2 id="字符串生成器"><a href="#字符串生成器" class="headerlink" title="字符串生成器"></a>字符串生成器</h2><p>字符串生成器即StringBuilder类，是字符串一个重要的常用类。新创建的StringBuilder对象初始容量是16个字符，可以自行指定初始长度，也可以动态地执行添加、删除和插入等字符串的编辑操作，大大提高了频繁增加字符串的效率。</p>
+<p>如果在程序中频繁地附加字符串，建议使用StringBuilder。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Jerque</span> </span>&#123; <span class="comment">// 新建类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; <span class="comment">// 主方法</span></span><br><span class="line">        String str = <span class="string">""</span>; <span class="comment">// 创建空字符串</span></span><br><span class="line">        <span class="comment">// 定义对字符串执行操作的起始时间</span></span><br><span class="line">        <span class="keyword">long</span> starTime = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123; <span class="comment">// 利用for循环执行10000次操作</span></span><br><span class="line">            str = str + i; <span class="comment">// 循环追加字符串</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> endTime = System.currentTimeMillis(); <span class="comment">// 定义对字符串操作后的时间</span></span><br><span class="line">        <span class="keyword">long</span> time = endTime - starTime; <span class="comment">// 计算对字符串执行操作的时间</span></span><br><span class="line">        System.out.println(<span class="string">"Sting消耗时间："</span> + time); <span class="comment">// 将执行的时间输出</span></span><br><span class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder(<span class="string">""</span>); <span class="comment">// 创建字符串生成器</span></span><br><span class="line">        starTime = System.currentTimeMillis(); <span class="comment">// 定义操作执行前的时间</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++) &#123; <span class="comment">// 利用for循环进行操作</span></span><br><span class="line">            builder.append(j); <span class="comment">// 循环追加字符</span></span><br><span class="line">        &#125;</span><br><span class="line">        endTime = System.currentTimeMillis(); <span class="comment">// 定义操作后的时间</span></span><br><span class="line">        time = endTime - starTime; <span class="comment">// 追加操作执行的时间</span></span><br><span class="line">        System.out.println(<span class="string">"StringBuilder消耗时间："</span> + time); <span class="comment">// 将操作时间输出</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">运行结果：</span></span><br><span class="line"><span class="comment">Sting消耗时间：1355</span></span><br><span class="line"><span class="comment">StringBuilder消耗时间：2</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">pangzibo243</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://litianbo243.github.io/2019/09/29/Java-字符串/">https://litianbo243.github.io/2019/09/29/Java-字符串/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/学习java/">学习java</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_zhifubao_code.jpg"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/my_weixin_code.jpg"><div class="post-qr-code__desc">微信打赏</div></div></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/09/27/JDK下载配置环境/"><span>JDK下载配置环境</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://raw.githubusercontent.com/litianbo243/litianbo243.github.io/master/images/chen_sir_1.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By pangzibo243</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
